@@ -1,66 +1,47 @@
-## Foundry
+# Goldcoin
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+[Audit Report](audit/report.pdf)
 
-Foundry consists of:
+## About
+Goldcoin is a completely decentralized, **hypothetical**, gold-backed stablecoin exchange protocol created by Zach Katz. Goldcoin is pegged to the price of one ounce of gold 1:1 and features a liquidity pool where liquidity providers receive 50 basis points of their total relative staked value for each Goldcoin minted. Liquidity is staked in ETH, not Goldcoin, and thanks to this, holders of Goldcoin can exchange their holdings back for ETH.
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
 
-## Documentation
+## Goldcoin Liquidity Pool
+The Goldcoin liquidity pool provides added liquidity to the exchange by incentivizing liquidity providers with 0.5% of the amount of Goldcoin minted, divided by their stake in the liquidity pool at the time of the mint. This supports the decentralization of the protocol.
 
-https://book.getfoundry.sh/
+NOTE: Rewards are calculated and distributed on demand (or once every 30 days via Chainlink Automation) in an accrual based fashion, while maintaining an accurate reflection of providers' ownership stake over time. This nuance drastically improves gas efficiency and accounts for much of the architectural complexity of the protocol.
 
-## Usage
+### Invariants
+1. No more than 20% of provider liquidity should ever be distributed
 
-### Build
+   > totalProviderLiquidity >= (totalStaked * 4) / 5
+2. An individual provider's rewards are equal to the sum of all transcations multiplied by the percent of their providership in the pool at the time of the transaction, and multiplied again by .05
 
-```shell
-$ forge build
-```
+   > providerRewards = 0.05 * ∑(mintValue * individualStaked/totalStaked), where '∑' means for all mints
 
-### Test
 
-```shell
-$ forge test
-```
+## Audit Scope Details
 
-### Format
+* Commit Hash: 50b45847a8ff52d8d1502b4a63318f30b253d8c4
+* In Scope: 
+    ```
+    ./src/
+    #-- Goldcoin.sol
+    #-- GCLiquidityPool.sol
+    ```
+* Solc Version: 0.8.20
+* Chain(s) to deploy contract to: Ethereum
 
-```shell
-$ forge fmt
-```
+### Roles
+*Users:* Can mint and exchange/burn Goldcoin
 
-### Gas Snapshots
+*Liquidity Providers:* Stake ETH for a proportional .05% reward on the amount of Goldcoin minted. Can stake, withdraw, and claim rewards.
 
-```shell
-$ forge snapshot
-```
 
-### Anvil
+## Additional Notes
 
-```shell
-$ anvil
-```
+Goldcoin is a project created by Zach Katz for educational and demonstrative purposes, complete with an audit report and invariant testing. It is, to the best of his knowledge, not based off of any other existing protocol or copied from any existing source. It serves as a medium for Zach to synthesize and showcase his nascent learnings in blockchain development and security auditing, and as such is incomplete and likely rife with flaws in both architecture and security. 
 
-### Deploy
+Feedback on the project is most welcome, thanks for stopping by.
 
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
 
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
