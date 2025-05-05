@@ -3,7 +3,7 @@
 [Audit Report](audit/report.pdf)
 
 ## About
-Goldcoin is a completely decentralized, **hypothetical**, gold-backed stablecoin exchange protocol created by Zach Katz. Goldcoin is pegged to the price of one ounce of gold 1:1 and features a liquidity pool where liquidity providers receive 50 basis points of their total relative staked value for each Goldcoin minted. Liquidity is staked in ETH, not Goldcoin, and thanks to this, holders of Goldcoin can exchange their holdings back for ETH.
+Goldcoin is a completely decentralized, **hypothetical**, gold-backed stablecoin exchange protocol created by Zach Katz. Goldcoin is pegged to the price of one ounce of gold 1:1 and features a liquidity pool where liquidity providers receive 50 basis points of their total relative staked value for each Goldcoin minted. Liquidity is staked in ETH, not Goldcoin, and thanks to this, owners of Goldcoin can exchange their holdings back for ETH.
 
 
 ## Goldcoin Liquidity Pool
